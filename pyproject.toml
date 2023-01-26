@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "odd-great-expectations"
+version = "0.1.0"
+description = ""
+authors = ["Pavel Mackarichev <vixtir90@gmail.com>"]
+readme = "README.md"
+packages = [{include = "odd_great_expectations"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+odd-models = "^2.0.10"
+oddrn-generator = "0.1.62"
+great-expectations = "^0.15.44"
+funcy = "^1.17"
+sqlalchemy = "^1.4.46"
+psycopg2 = "^2.9.5"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+isort = "^5.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
