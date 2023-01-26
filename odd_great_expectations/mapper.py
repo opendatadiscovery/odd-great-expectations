@@ -129,6 +129,7 @@ def uniq_name(config: ExpectationConfiguration):
     result = config.expectation_type
     impl = get_expectation_impl(config.expectation_type)
 
+    result += f":{config.kwargs.get('batch_id')}"
     for key in impl.args_keys:
         if value := config.kwargs.get(key):
             if isinstance(value, (list, set, tuple)):
