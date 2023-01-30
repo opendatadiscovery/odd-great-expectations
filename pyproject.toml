@@ -2,7 +2,7 @@
 name = "odd-great-expectations"
 version = "0.1.1"
 description = "OpenDataDiscovery Action for Great Expectations"
-authors = ["Pavel Mackarichev <vixtir90@gmail.com>"]
+authors = ["Pavel Makarichev <vixtir90@gmail.com>"]
 readme = "README.md"
 license = "Apache-2.0"
 keywords = ['Open Data Discovery', 'Great Expectations', "Metadata", "Data Discovery", "Data Observability"]
