@@ -1,5 +1,5 @@
 ## OpenDataDiscovery Great Expectations metadata collecting.
-
+[![PyPI version](https://badge.fury.io/py/odd-great-expectations.svg)](https://badge.fury.io/py/odd-great-expectations)
 
 ## Supporting
 | Feature                     | Supporting |
