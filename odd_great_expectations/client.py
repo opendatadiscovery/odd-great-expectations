@@ -1,7 +1,12 @@
 import os
 
-from odd_models.api_client.open_data_discovery_ingestion_api import ODDApiClient
+from odd_models.api_client.open_data_discovery_ingestion_api import \
+    ODDApiClient
 from odd_models.models import DataEntityList, DataSource, DataSourceList
+from requests import HTTPError
+
+from odd_great_expectations.errors import (CreateDataSourceError,
+                                           IngestionEntitiesError)
 
 
 class Client:
@@ -24,10 +29,19 @@ class Client:
             DataSourceList(items=[DataSource(oddrn=data_source_oddrn, name=name)]),
             headers=self._headers,
         )
-        response.raise_for_status()
+
+        try:
+            response.raise_for_status()
+        except HTTPError as e:
+            message = e.response.json().get("message")
+            raise CreateDataSourceError(name, data_source_oddrn, message) from e
 
     def ingest_data_entities(self, data_entities: DataEntityList) -> None:
         response = self._client.post_data_entity_list(
             data_entities, headers=self._headers
         )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError as e:
+            message = e.response.json().get("message")
+            raise IngestionEntitiesError(data_entities.data_source_oddrn, message)

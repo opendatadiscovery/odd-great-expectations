@@ -10,7 +10,7 @@ def postgres_dataset(engine: Engine, batch_data: SqlAlchemyBatchData) -> str:
     generator_params = {
         "host_settings": engine.url.host,
         "databases": engine.url.database,
-        "schemas": batch_data.source_schema_name or 'public',
+        "schemas": batch_data.source_schema_name or "public",
         "tables": batch_data.source_table_name,
     }
 

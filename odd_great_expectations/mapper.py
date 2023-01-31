@@ -2,22 +2,14 @@ import datetime
 from typing import Any, Optional, Tuple
 
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult,
-    ValidationResultIdentifier,
-)
+    ExpectationSuiteValidationResult, ValidationResultIdentifier)
 from great_expectations.core import ExpectationConfiguration
-from great_expectations.validator.validator import ExpectationValidationResult
-from odd_models.models import (
-    DataEntity,
-    DataEntityList,
-    DataEntityType,
-    DataQualityTest,
-    DataQualityTestExpectation,
-    DataQualityTestRun,
-    QualityRunStatus, LinkedUrl,
-)
-from oddrn_generator.generators import GreatExpectationsGenerator
 from great_expectations.expectations.registry import get_expectation_impl
+from great_expectations.validator.validator import ExpectationValidationResult
+from odd_models.models import (DataEntity, DataEntityList, DataEntityType,
+                               DataQualityTest, DataQualityTestExpectation,
+                               DataQualityTestRun, LinkedUrl, QualityRunStatus)
+from oddrn_generator.generators import GreatExpectationsGenerator
 
 
 class MapValidationResult:
@@ -94,10 +86,8 @@ class MapValidationResult:
         )
 
         linked_url_list = None
-        if self._docs_link and not self._docs_link.startswith('file://'):
-            linked_url_list = [
-                LinkedUrl(name='docs', url=self._docs_link)
-            ]
+        if self._docs_link and not self._docs_link.startswith("file://"):
+            linked_url_list = [LinkedUrl(name="docs", url=self._docs_link)]
 
         dqt = DataQualityTest(
             suite_name=suite_name,
