@@ -1,8 +1,11 @@
 from typing import Any, Union
 
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult, GXCloudIdentifier, ValidationAction,
-    ValidationResultIdentifier)
+    ExpectationSuiteValidationResult,
+    GXCloudIdentifier,
+    ValidationAction,
+    ValidationResultIdentifier,
+)
 from great_expectations.validator.validator import Validator
 from loguru import logger
 from oddrn_generator.generators import GreatExpectationsGenerator
