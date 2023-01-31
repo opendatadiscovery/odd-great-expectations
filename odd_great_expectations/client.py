@@ -20,7 +20,7 @@ class Client:
 
         if token is None:
             raise ValueError(
-                "Couldn't create HttpClient. Host was not set. Possible solutions:\n"
+                "Couldn't create HttpClient. Token was not set. Possible solutions:\n"
                 "1. Create token using odd-cli\n"
                 "2. Create collector token using platform UI\n"
                 "Set env variable :export ODD_PLATFORM_TOKEN=<TOKEN_FROM_STEPS_ABOVE>"
