@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "odd-great-expectations"
-version = "0.1.2"
+version = "0.1.3"
 description = "OpenDataDiscovery Action for Great Expectations"
 authors = ["Pavel Makarichev <vixtir90@gmail.com>"]
 readme = "README.md"
