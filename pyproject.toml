@@ -16,6 +16,7 @@ great-expectations = "^0.15.44"
 funcy = "^1.17"
 sqlalchemy = "^1.4.46"
 psycopg2 = "^2.9.5"
+loguru = "^0.6.0"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -7,6 +7,7 @@ from great_expectations.checkpoint.actions import (
     ValidationResultIdentifier,
 )
 from great_expectations.validator.validator import Validator
+from loguru import logger
 from oddrn_generator.generators import GreatExpectationsGenerator
 
 from odd_great_expectations.client import Client
@@ -39,31 +40,39 @@ class ODDAction(ValidationAction):
         checkpoint_identifier=None,
         payload=None,
     ):
-        client = self._odd_client
-        expectation_suite = data_asset.expectation_suite
-        suite_name = expectation_suite.expectation_suite_name
-        generator = GreatExpectationsGenerator(
-            host_settings=self._host, suites=suite_name
-        )
+        try:
+            logger.info("Start collecting metadata")
+            client = self._odd_client
+            expectation_suite = data_asset.expectation_suite
+            suite_name = expectation_suite.expectation_suite_name
+            generator = GreatExpectationsGenerator(
+                host_settings=self._host, suites=suite_name
+            )
 
-        docs_link = None
-        if payload:
-            if data_docs := payload.get("update_data_docs"):
-                docs_link = data_docs.get("local_site")
+            docs_link = None
+            if payload:
+                if data_docs := payload.get("update_data_docs"):
+                    docs_link = data_docs.get("local_site")
 
-        client.ingest_data_source(
-            data_source_oddrn=generator.get_data_source_oddrn(),
-            name=self._data_source_name,
-        )
+            client.ingest_data_source(
+                data_source_oddrn=generator.get_data_source_oddrn(),
+                name=self._data_source_name,
+            )
 
-        datasets = get_datasets(data_asset.execution_engine)
+            datasets = get_datasets(data_asset.execution_engine)
 
-        data_entity_list = MapValidationResult(
-            suite_result=validation_result_suite,
-            suite_result_identifier=validation_result_suite_identifier,
-            generator=generator,
-            datasets=datasets,
-            docs_link=docs_link,
-        ).map()
+            data_entity_list = MapValidationResult(
+                suite_result=validation_result_suite,
+                suite_result_identifier=validation_result_suite_identifier,
+                generator=generator,
+                datasets=datasets,
+                docs_link=docs_link,
+            ).map()
 
-        client.ingest_data_entities(data_entity_list)
+            client.ingest_data_entities(data_entity_list)
+
+            logger.success(
+                f"Metadata successfully loaded to Platform. Ingested {len(data_entity_list.items)} entities"
+            )
+        except Exception as e:
+            logger.error(f"Error during collecting metadata. {e}")
