@@ -20,9 +20,10 @@ def postgres_dataset(engine: Engine, batch_data: SqlAlchemyBatchData) -> str:
 
 
 def snowflake_dataset(engine: Engine, batch_data: SqlAlchemyBatchData) -> str:
+    # Snowflake might create SqlAlchemy database name like <DATABASE_NAME>/<SCHEMA_NAME>
     generator_params = {
         "host_settings": engine.engine.url.host,
-        "databases": engine.engine.url.database,
+        "databases": engine.engine.url.database.split('/')[0],
         "schemas": batch_data.source_schema_name or "public",
         "tables": batch_data.source_table_name,
     }
