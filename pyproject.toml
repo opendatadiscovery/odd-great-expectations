@@ -10,8 +10,8 @@ packages = [{include = "odd_great_expectations"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-odd-models = "^2.0.10"
-oddrn-generator = "0.1.62"
+odd-models = "^2.0.11"
+oddrn-generator = "0.1.68"
 great-expectations = "^0.15.44"
 funcy = "^1.17"
 sqlalchemy = "^1.4.46"
