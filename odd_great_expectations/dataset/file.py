@@ -1,12 +1,13 @@
 from pathlib import Path
 
+from great_expectations.core.id_dict import BatchSpec
 from great_expectations.execution_engine import PandasExecutionEngine
-from loguru import logger
+from odd_great_expectations.logger import logger
 from oddrn_generator.generators import FilesystemGenerator
 
 
 def get_file_dataset(engine: PandasExecutionEngine) -> list[str]:
-    batch_spec = engine.batch_manager.active_batch.batch_spec
+    batch_spec: BatchSpec = engine.batch_manager.active_batch.batch_spec
 
     logger.debug("Batch spec")
     logger.debug(batch_spec.__dict__)

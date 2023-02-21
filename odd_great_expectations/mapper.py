@@ -1,36 +1,45 @@
 import datetime
 from typing import Any, Optional, Tuple
 
+from funcy import lmapcat
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult, ValidationResultIdentifier)
+    ExpectationSuiteValidationResult,
+    ValidationResultIdentifier,
+)
 from great_expectations.core import ExpectationConfiguration
 from great_expectations.expectations.registry import get_expectation_impl
 from great_expectations.validator.validator import ExpectationValidationResult
-from odd_models.models import (DataEntity, DataEntityList, DataEntityType,
-                               DataQualityTest, DataQualityTestExpectation,
-                               DataQualityTestRun, LinkedUrl, QualityRunStatus)
+from odd_models.models import (
+    DataEntity,
+    DataEntityList,
+    DataEntityType,
+    DataQualityTest,
+    DataQualityTestExpectation,
+    DataQualityTestRun,
+    LinkedUrl,
+    QualityRunStatus,
+)
 from oddrn_generator.generators import GreatExpectationsGenerator
 
 
 class MapValidationResult:
     def __init__(
-        self,
-        suite_result: ExpectationSuiteValidationResult,
-        suite_result_identifier: ValidationResultIdentifier,
-        generator: GreatExpectationsGenerator,
-        datasets: list[str],
-        docs_link: Optional[str],
+            self,
+            suite_result: ExpectationSuiteValidationResult,
+            suite_result_identifier: ValidationResultIdentifier,
+            generator: GreatExpectationsGenerator,
+            datasets: list[str],
+            docs_link: Optional[str],
     ) -> None:
-        self._generator = generator
-        self._datasets = datasets
         self._result = suite_result
         self._result_identifier = suite_result_identifier
+
+        self._generator = generator
+        self._datasets = datasets
         self._docs_link = docs_link
 
     def map(self) -> DataEntityList:
-        data_entities = []
-        for result in self._result.results:
-            data_entities.extend(self._map_result(result))
+        data_entities = lmapcat(self._map_result, self._result.results)
 
         return DataEntityList(
             data_source_oddrn=self._generator.get_data_source_oddrn(),
@@ -38,12 +47,12 @@ class MapValidationResult:
         )
 
     def _map_result(
-        self, validation_result: ExpectationValidationResult
+            self, validation_result: ExpectationValidationResult
     ) -> tuple[DataEntity, DataEntity]:
-        run_id = self._result_identifier.run_id
-        status, status_reason = self.get_status(validation_result)
-
         job = self.map_config(validation_result.expectation_config)
+        status, status_reason = get_status(validation_result)
+
+        run_id = self._result_identifier.run_id
         oddrn = self._generator.get_oddrn_by_path("runs", run_id.run_name)
 
         run = DataEntity(
@@ -59,22 +68,6 @@ class MapValidationResult:
             ),
         )
         return job, run
-
-    def get_status(
-        self, validation_result: ExpectationValidationResult
-    ) -> Tuple[QualityRunStatus, str]:
-        status = QualityRunStatus.SUCCESS
-        status_reason = None
-
-        if not validation_result.success:
-            status = QualityRunStatus.FAILED
-
-            if unexpected := validation_result.result.get("partial_unexpected_list"):
-                status_reason = (
-                    f"Unexpected values {str(unexpected)}" if unexpected else None
-                )
-
-        return status, status_reason
 
     def map_config(self, config: ExpectationConfiguration) -> DataEntity:
         original_type = config.expectation_type
@@ -106,6 +99,23 @@ class MapValidationResult:
         )
 
 
+def get_status(
+        validation_result: ExpectationValidationResult
+) -> Tuple[QualityRunStatus, str]:
+    status = QualityRunStatus.SUCCESS
+    status_reason = None
+
+    if not validation_result.success:
+        status = QualityRunStatus.FAILED
+
+        if unexpected := validation_result.result.get("partial_unexpected_list"):
+            status_reason = (
+                f"Unexpected values {str(unexpected)}" if unexpected else None
+            )
+
+    return status, status_reason
+
+
 def flat_kwargs(kwargs: dict[str, Any]):
     for k, v in kwargs.items():
         if isinstance(v, (list, set, tuple)):
@@ -115,11 +125,12 @@ def flat_kwargs(kwargs: dict[str, Any]):
     return kwargs
 
 
-def uniq_name(config: ExpectationConfiguration):
+def uniq_name(config: ExpectationConfiguration) -> str:
     result = config.expectation_type
     impl = get_expectation_impl(config.expectation_type)
 
     result += f":{config.kwargs.get('batch_id')}"
+
     for key in impl.args_keys:
         if value := config.kwargs.get(key):
             if isinstance(value, (list, set, tuple)):
