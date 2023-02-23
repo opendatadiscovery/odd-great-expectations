@@ -24,12 +24,12 @@ from oddrn_generator.generators import GreatExpectationsGenerator
 
 class MapValidationResult:
     def __init__(
-            self,
-            suite_result: ExpectationSuiteValidationResult,
-            suite_result_identifier: ValidationResultIdentifier,
-            generator: GreatExpectationsGenerator,
-            datasets: list[str],
-            docs_link: Optional[str],
+        self,
+        suite_result: ExpectationSuiteValidationResult,
+        suite_result_identifier: ValidationResultIdentifier,
+        generator: GreatExpectationsGenerator,
+        datasets: list[str],
+        docs_link: Optional[str],
     ) -> None:
         self._result = suite_result
         self._result_identifier = suite_result_identifier
@@ -47,7 +47,7 @@ class MapValidationResult:
         )
 
     def _map_result(
-            self, validation_result: ExpectationValidationResult
+        self, validation_result: ExpectationValidationResult
     ) -> tuple[DataEntity, DataEntity]:
         job = self.map_config(validation_result.expectation_config)
         status, status_reason = get_status(validation_result)
@@ -100,7 +100,7 @@ class MapValidationResult:
 
 
 def get_status(
-        validation_result: ExpectationValidationResult
+    validation_result: ExpectationValidationResult,
 ) -> Tuple[QualityRunStatus, str]:
     status = QualityRunStatus.SUCCESS
     status_reason = None

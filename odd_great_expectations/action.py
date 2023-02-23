@@ -10,7 +10,7 @@ from great_expectations.checkpoint.actions import (
 from great_expectations.validator.validator import Validator
 from oddrn_generator.generators import GreatExpectationsGenerator
 
-from odd_great_expectations.client import Client
+from odd_models.api_client.v2.odd_api_client import Client
 from odd_great_expectations.dataset.get_dataset import get_datasets
 from odd_great_expectations.logger import logger
 from odd_great_expectations.mapper import MapValidationResult
@@ -18,12 +18,11 @@ from odd_great_expectations.mapper import MapValidationResult
 
 class ODDAction(ValidationAction):
     def __init__(
-            self,
-            data_context,
-            # Custom action params
-            data_source_name: str,
-            platform_host: str = None,
-            platform_token: str = None,
+        self,
+        data_context,
+        data_source_name: str,
+        platform_host: str = None,
+        platform_token: str = None,
     ):
         super().__init__(data_context)
 
@@ -31,15 +30,15 @@ class ODDAction(ValidationAction):
         self._data_source_name = data_source_name
 
     def _run(
-            self,
-            validation_result_suite: ExpectationSuiteValidationResult,
-            validation_result_suite_identifier: Union[
-                ValidationResultIdentifier, GXCloudIdentifier
-            ],
-            data_asset: Validator,
-            expectation_suite_identifier=None,
-            checkpoint_identifier=None,
-            **kwargs,
+        self,
+        validation_result_suite: ExpectationSuiteValidationResult,
+        validation_result_suite_identifier: Union[
+            ValidationResultIdentifier, GXCloudIdentifier
+        ],
+        data_asset: Validator,
+        expectation_suite_identifier=None,
+        checkpoint_identifier=None,
+        **kwargs,
     ):
         try:
             client = self._odd_client
@@ -47,7 +46,7 @@ class ODDAction(ValidationAction):
             expectation_suite = data_asset.expectation_suite
             suite_name = expectation_suite.expectation_suite_name
             generator = GreatExpectationsGenerator(
-                host_settings='local', suites=suite_name
+                host_settings="local", suites=suite_name
             )
             client.create_data_source(
                 data_source_oddrn=generator.get_data_source_oddrn(),
@@ -55,7 +54,7 @@ class ODDAction(ValidationAction):
             )
 
             datasets: list[str] = get_datasets(data_asset.execution_engine)
-            docs_link: Optional[str] = get_docs_links(kwargs.get('payload', None))
+            docs_link: Optional[str] = get_docs_links(kwargs.get("payload", None))
 
             data_entity_list = MapValidationResult(
                 suite_result=validation_result_suite,
@@ -74,6 +73,7 @@ class ODDAction(ValidationAction):
         except Exception as e:
             logger.debug(traceback.format_exc())
             logger.error(f"Error during collecting metadata. {e}")
+            return {"odd_action_status": "failed"}
 
 
 def get_docs_links(payload: Optional[dict]) -> Optional[str]:
