@@ -1,9 +1,10 @@
 import datetime
 from typing import Any, Optional, Tuple
 
+from great_expectations.core import ExpectationSuiteValidationResult
+
 from funcy import lmapcat
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult,
     ValidationResultIdentifier,
 )
 from great_expectations.core import ExpectationConfiguration
