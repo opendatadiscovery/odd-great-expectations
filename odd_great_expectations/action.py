@@ -1,8 +1,9 @@
 import traceback
 from typing import Union, Optional
 
+from great_expectations.core import ExpectationSuiteValidationResult
+
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult,
     GXCloudIdentifier,
     ValidationAction,
     ValidationResultIdentifier,

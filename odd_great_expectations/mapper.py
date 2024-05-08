@@ -1,9 +1,10 @@
 import datetime
 from typing import Any, Optional, Tuple
 
+from great_expectations.core import ExpectationSuiteValidationResult
+
 from funcy import lmapcat
 from great_expectations.checkpoint.actions import (
-    ExpectationSuiteValidationResult,
     ValidationResultIdentifier,
 )
 from great_expectations.core import ExpectationConfiguration
@@ -15,6 +16,7 @@ from odd_models.models import (
     DataEntityType,
     DataQualityTest,
     DataQualityTestExpectation,
+    DataQualityTestExpectationCategory,
     DataQualityTestRun,
     LinkedUrl,
     QualityRunStatus,
@@ -86,7 +88,9 @@ class MapValidationResult:
             suite_name=suite_name,
             dataset_list=self._datasets,
             expectation=DataQualityTestExpectation(
-                type=original_type, **flat_kwargs(config.kwargs)
+                type=original_type,
+                category=DataQualityTestExpectationCategory.ASSERTION,
+                **flat_kwargs(config.kwargs)
             ),
             linked_url_list=linked_url_list,
         )
