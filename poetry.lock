@@ -1767,13 +1767,13 @@ files = [
 
 [[package]]
 name = "odd-models"
-version = "2.0.48"
+version = "2.0.50"
 description = "Open Data Discovery Models"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "odd_models-2.0.48-py3-none-any.whl", hash = "sha256:ad63bf59aee25b968ffc052ab91d16ac27712567a70630faf2cc77765525e306"},
-    {file = "odd_models-2.0.48.tar.gz", hash = "sha256:5884c43a832a20aab6b62bcd0d247452cf9cbf5dafc614ffc614399d970d4b8b"},
+    {file = "odd_models-2.0.50-py3-none-any.whl", hash = "sha256:cd6a17c561b043e45c4c08bd6eadce0e069124245823677641a254774fcd745c"},
+    {file = "odd_models-2.0.50.tar.gz", hash = "sha256:c9645f417278288ac22ab1a18f3c07f63f3c5f3df6ed4b1492c0d1380fce4be6"},
 ]
 
 [package.dependencies]
@@ -1949,13 +1949,13 @@ ptyprocess = ">=0.5"
 
 [[package]]
 name = "platformdirs"
-version = "4.2.1"
+version = "4.2.2"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "platformdirs-4.2.1-py3-none-any.whl", hash = "sha256:17d5a1161b3fd67b390023cb2d3b026bbd40abde6fdb052dfbd3a29c3ba22ee1"},
-    {file = "platformdirs-4.2.1.tar.gz", hash = "sha256:031cd18d4ec63ec53e82dceaac0417d218a6863f7745dfcc9efe7793b7039bdf"},
+    {file = "platformdirs-4.2.2-py3-none-any.whl", hash = "sha256:2d7a1657e36a80ea911db832a8a6ece5ee53d8de21edd5cc5879af6530b1bfee"},
+    {file = "platformdirs-4.2.2.tar.gz", hash = "sha256:38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3"},
 ]
 
 [package.extras]
@@ -3491,4 +3491,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "f7c505c466dbc311ccb7d6631aeb879afd6c6e44f943f723ad000ee54275490c"
+content-hash = "e08e3b518af053782bc76bb75af1f48fa94f733ff803ebe67afc3af91dc0b5ef"

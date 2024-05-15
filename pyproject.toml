@@ -10,7 +10,7 @@ packages = [{include = "odd_great_expectations"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-odd-models = "2.0.48"
+odd-models = "2.0.50"
 oddrn-generator = "^0.1.68"
 great-expectations = "^0.18.12"
 funcy = "^2.0"
