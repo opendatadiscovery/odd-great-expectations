@@ -21,11 +21,12 @@ class ODDAction(ValidationAction):
     def __init__(
         self,
         data_context,
+        name: str,
         data_source_name: str,
         platform_host: str = None,
         platform_token: str = None,
     ):
-        super().__init__(data_context)
+        super().__init__(data_context, name=name)
 
         self._odd_client = Client(platform_host, platform_token)
         self._data_source_name = data_source_name

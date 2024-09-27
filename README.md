@@ -26,6 +26,7 @@ action_list:
       module_name: odd_great_expectations.action
       class_name: ODDAction
       platform_host: <PLATFORM_HOST>
+      platform_token: <PLATFORM_TOKEN>  # collector token
       data_source_name: <DATA_SOURCE_NAME>
 ```
 
@@ -37,7 +38,7 @@ Parameters:
 
 `data_source_name` - Unique name for data source, i.e. local_qa_test
 
-Both `platform_host` and `platform_token`  can be set using `ODD_PLATFORM_HOST` and `ODD_PLATFORM_PLATFORM` env variables accordingly.
+Both `platform_host` and `platform_token`  can be set using `ODD_PLATFORM_HOST` and `ODD_PLATFORM_TOKEN` env variables accordingly.
 
 Run checkpoint
 ```bash
