@@ -22,10 +22,10 @@ def postgres_dataset(engine: Engine, batch_data: SqlAlchemyBatchData) -> str:
         ds_path = "tables"
     elif ds_name in inspector.get_view_names():
         logger.info(f"Dataset '{ds_name}' is a view.")
-        ds_path = "view"
+        ds_path = "views"
     elif ds_name in inspector.get_materialized_view_names():
         logger.info(f"Dataset '{ds_name}' is a materialized view.")
-        ds_path = "view"
+        ds_path = "views"
     else:
         logger.info(f"Dataset '{ds_name}' is not a table, view or materialized view")
         raise Exception("Unexpected dataset type")
