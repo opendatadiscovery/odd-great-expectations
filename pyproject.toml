@@ -12,7 +12,7 @@ packages = [{include = "odd_great_expectations"}]
 python = "^3.9"
 odd-models = "^2.0.50"
 oddrn-generator = "^0.1.103"
-great-expectations = "^0.18.12"
+great-expectations = "0.18.21"
 funcy = "^2.0"
 sqlalchemy = "^2.0.35"
 psycopg2-binary = "^2.9.5"
